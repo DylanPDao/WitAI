@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   return (
-    <Button variant="destructive">protected</Button>
+    <div>
+      <p>Dashboard page protected</p>
+    </div>
   );
 }
