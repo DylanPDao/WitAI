@@ -2,19 +2,23 @@
 
 import * as z from "zod"
 import { Heading } from "@/components/heading"
+import { Empty } from "@/components/empty"
+import { Loader } from "@/components/loader"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
 import { MessageSquare } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { formSchema } from "./constants"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 import { useState } from "react"
-import { Empty } from "@/components/empty"
-import { Loader } from "@/components/loader"
+import { cn } from "@/lib/utils"
+import { UserAvatar } from "@/components/user-avatar"
+import { BotAvatar } from "@/components/bot-avatar"
 
 
 const ConversationPage = () => {
@@ -100,8 +104,11 @@ const ConversationPage = () => {
             )}
             <div className="flex flex-col-reverse gap-y-4">
                 {messages.map((message) => (
-                  <div key={message.content as string}>
+                  <div className={cn("p-8 w-full flex items-start gap-x-8 rounded-lg", message.role === "user" ? "bg-white border bprder-black/10" : "bg-muted")} key={message.content as string}>
+                    {message.role === "user" ? <UserAvatar/> : <BotAvatar/>}
+                    <p className="text-sm">
                     {message.content as string}
+                    </p>
                   </div>
                 ))}
             </div>
