@@ -10,6 +10,7 @@ import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const tools = [
   {
@@ -54,7 +55,7 @@ export const ProModal = () => {
       const response = axios.get("/api/stripe");
       window.location.href = (await response).data.url
     } catch (error) {
-      console.log(error)
+      toast.error("something went wrong")
     } finally {
       setLoading(false)
     }
@@ -93,6 +94,7 @@ export const ProModal = () => {
           </DialogHeader>
           <DialogFooter>
             <Button
+              disabled={loading}
               onClick={onSubscribe}
               size="lg"
               variant="premium"
