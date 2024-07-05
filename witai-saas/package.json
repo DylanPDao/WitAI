@@ -26,6 +26,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "react-markdown": "^9.0.1",
+    "replicate": "^0.31.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
@@ -37,6 +38,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",
+    "prisma": "^5.16.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
