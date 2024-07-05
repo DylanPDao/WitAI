@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit"
 
 
 const openai = new OpenAI({
@@ -24,11 +25,20 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", {status: 401})
     }
 
+    const freeTrial = await checkApiLimit()
+
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
+    };
+
     const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            messages: [instructionMessage, ...messages]});
-    return NextResponse.json(response.choices[0].message)
+            messages: [instructionMessage, ...messages]
+          });
 
+    await increaseApiLimit()
+
+    return NextResponse.json(response.choices[0].message)
   } catch (error) {
     console.error("[CODE_ERROR]", error);
     return new NextResponse("Internal error", { status: 500 });
