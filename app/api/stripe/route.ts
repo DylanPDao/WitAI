@@ -22,6 +22,8 @@ export async function GET() {
       }
     })
 
+    console.log(userSubscription)
+
     if(userSubscription && userSubscription.stripeCustomerId) {
       const stripeSession = await stripe.billingPortal.sessions.create({
         customer: userSubscription.stripeCustomerId,
@@ -47,6 +49,9 @@ export async function GET() {
               description: "Unlimited AI Generation"
             },
             unit_amount: 2000,
+            recurring: {
+              interval: "month"
+            }
           },
           quantity: 1,
         }

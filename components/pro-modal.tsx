@@ -52,8 +52,9 @@ export const ProModal = () => {
   const onSubscribe = async () => {
     try {
       setLoading(true)
-      const response = axios.get("/api/stripe");
-      window.location.href = (await response).data.url
+      const response = await axios.get("/api/stripe");
+      console.log(response)
+      window.location.href = response.data.url
     } catch (error) {
       toast.error("something went wrong")
     } finally {
